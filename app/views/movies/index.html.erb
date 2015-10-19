@@ -1,0 +1,36 @@
+<div class="container">
+   <h1>Search</h1>
+  <%= form_tag(movies_path, :method => "get", class: "form-inline") do %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search Movies", class: "form-control" %>
+    <%= submit_tag "Search", class: "btn btn-default" %>
+  <% end %>
+
+  <% if params[:search] %>
+  <p>You searched for "<%=params[:search] %>". Here are your results:</p> 
+  <% @results.each_slice(6) do |results| %>
+    <div class="row">
+      <% results.each do |result| %>
+        <div class="col-md-2">
+          <a href="/movies/<%= result.id %>"><img src="http://image.tmdb.org/t/p/w154/<%= result.poster_path %>"></a>
+          <p><%= result.title %> <span class="glyphicon glyphicon-star"><%= result.vote_average %></span></p>
+        </div>
+      <% end %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <hr>
+
+  <h1>Now playing</h1>
+  <%@now_playing.each_slice(6) do |movies| %>
+    <div class="row">
+    <% movies.each do |movie| %>
+      <div class="col-md-2">
+        <a href="/movies/<%= movie["id"] %>"><img src="http://image.tmdb.org/t/p/w154/<%= movie["poster_path"] %>"></a>
+        <p><%= movie["title"] %> <span class="glyphicon glyphicon-star"><%= movie["vote_average"] %></span></p>
+      </div>
+      <% end %>
+      </div>
+    <% end %>
+  
+</div>
