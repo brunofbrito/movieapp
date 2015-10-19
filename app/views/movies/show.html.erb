@@ -1,29 +1,26 @@
 <div class="container">
-  <h1 class="text-center text-uppercase"><%= @movie["title"] %></h1>
+  <h1 class="text-center text-uppercase"><%= @movie.title %></h1>
 
   <div class="row">
     <div class="col-md-3">
-      <img src="http://image.tmdb.org/t/p/w154/<%= @movie["poster_path"] %>">
+      <img src="http://image.tmdb.org/t/p/w154/<%= @movie.poster_path %>">
     </div>
     <div class="col-md-9">
-      <p><strong>Release date:</strong> <%= @movie["release_date"] %></p>
-      <p><strong>Overview:</strong> <%= @movie["overview"] %></p>
-      <p><strong>Runtime:</strong> <%= @movie["runtime"] %></p>
-      <p><strong>Tagline:</strong> <%= @movie["tagline"] %></p>
-      <p><strong>Vote Average:</strong> <%= @movie["vote_average"] %></p>
+      <p><strong>Release date:</strong> <%= @movie.release_date %></p>
+      <p><strong>Overview:</strong> <%= @movie.overview %></p>
+      <p><strong>Runtime:</strong> <%= @movie.runtime %></p>
+      <p><strong>Tagline:</strong> <%= @movie.tagline %></p>
+      <p><strong>Vote Average:</strong> <%= @movie.vote_average %></p>
     </div>
   </div>
-  
+
   <h1>Your thoughts?</h1>
-  <%= form_for @shout, html: {class: "form-group"} do |f| %>
+  <%= form_for @shout, url: movie_shouts_path(movie_id: @movie.id), html: {class: "form-group"} do |f| %>
     <%= f.text_field :shout %>
     <%= f.submit "Submit" %>
   <% end %>
 
-  <% if @shouts %>
-    <% @shouts.each do |shout| %>
-      <div><%= shout.shout %> <em>by</em> <%= shout.user_id %></div>
-      <% end %> 
+  <% @shouts.each do |shout| %>
+    <div><%= shout.shout %> <em>by</em> <%= shout.user_id %></div>
   <% end %>
-
 </div>
