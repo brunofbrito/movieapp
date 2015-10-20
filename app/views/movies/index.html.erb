@@ -1,10 +1,4 @@
 <div class="container">
-   <h1>Search</h1>
-  <%= form_tag(movies_path, :method => "get", class: "form-inline") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Search Movies", class: "form-control" %>
-    <%= submit_tag "Search", class: "btn btn-default" %>
-  <% end %>
-
   <% if params[:search] %>
   <p>You searched for "<%=params[:search] %>". Here are your results:</p> 
   <% @results.each_slice(6) do |results| %>
@@ -17,9 +11,8 @@
       <% end %>
       </div>
     <% end %>
+    <hr>
   <% end %>
-
-  <hr>
 
   <h1>Now playing</h1>
   <%@now_playing.each_slice(6) do |movies| %>

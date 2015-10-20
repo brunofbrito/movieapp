@@ -8,12 +8,37 @@
 </head>
 <body>
 
-  <% if signed_in? %>
-    Signed in as: <%= current_user.email %>
-    <%= button_to 'Sign out', sign_out_path, method: :delete %>
-  <% else %>
-    <%= link_to 'Sign in', sign_in_path %>
-  <% end %>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to "Movie App", root_path, class:"navbar-brand" %>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <%= form_tag(movies_path, :method => "get", class: "form-control") do %>
+            <%= text_field_tag :search, params[:search], placeholder: "Search Movies", class: "form-control" %>
+          </div>
+          <%= submit_tag "Search", class: "btn btn-default" %>
+        <% end %>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="navbar-text"><% if signed_in? %>Signed in as: <%= current_user.email %><% end %></li>
+        <li><% if signed_in? %><%= button_to 'Sign out', sign_out_path, method: :delete, class: "btn btn-danger navbar-btn" %>
+        <% else %>
+          <%= button_to 'Sign in', sign_in_path, method: :get, class: "btn btn-info navbar-btn" %>
+        <% end %>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 
   <div id="flash">
     <% flash.each do |key, value| %>
@@ -22,6 +47,12 @@
   </div>
 
 <%= yield %>
+
+  <footer class="footer">
+      <div class="container">
+        <p class="text-muted text-center">Movie App's awesome footer.</p>
+      </div>
+  </footer>
 
 </body>
 </html>
