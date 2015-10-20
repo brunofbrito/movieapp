@@ -1,18 +1,16 @@
 class ShoutsController < ApplicationController
 
   def create
-    @movie = Tmdb::Movie.detail(286217)["id"]
     @shout = Shout.create(shout_params)
-    @shout.movie_id = @movie
-    @shout.user_id = current_user.id
-    @shout.save
-    redirect_to movie_path(@movie)
+    redirect_to movie_path(id: params[:movie_id])
   end
 
   private
 
   def shout_params
-    params.require(:shout).permit(:shout, :movie_id, :user_id)
+    params.require(:shout).permit(:shout, :user_id).merge({
+      user: current_user,
+      movie_id: params[:movie_id]
+    })
   end
-
 end
