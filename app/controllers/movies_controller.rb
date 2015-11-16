@@ -16,6 +16,7 @@ class MoviesController < ApplicationController
     end
     @movie = Movie.new(Tmdb::Movie.detail(params[:id]))
     @shout = Shout.new
+    @own_shout = Shout.where(movie_id: @movie.id, user_id: current_user.id)
     @shouts = Shout.where(movie_id: params[:id])
     url = "http://api.traileraddict.com/?imdb=#{@movie.imdb_id.delete("^0-9")}&count=4&width=000"
     doc = Nokogiri::HTML(open(url))
