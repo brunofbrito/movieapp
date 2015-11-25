@@ -14,8 +14,10 @@
     <hr>
   <% end %>
 
+  <% if signed_in? %>
   <h1>What your friends are saying</h1>
     <p><%= render_activities(@personal_activities) %></p>
+  <% end %>
 
   <h1>What the world is saying</h1>
     <p><%= render_activities(@world_activities) %></p>

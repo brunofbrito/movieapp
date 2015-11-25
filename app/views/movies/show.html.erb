@@ -43,16 +43,18 @@
       <iframe width="100%" height="320" src="//v.traileraddict.com/<%= @trailer %>" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" scrolling="no"></iframe>
   <% end %>
   
-  <% if @own_shout.empty? == false %>
-    <h2>What you said about this movie</h2>
-    <p><%= @own_shout.first.shout %>
-    <% else %>
-    <h2>Your thoughts?</h2>
-    <%= form_for @shout, url: movie_shouts_path(movie_id: @movie.id), html: {class: "input-group"} do |f| %>
-      <%= f.text_field :shout, class:"form-control" %>
-      <span class="input-group-btn">
-        <%= f.submit "Shout!", class:"btn btn-default" %>
-      </span>
+  <% if signed_in? %>
+    <% if @own_shout.empty? == false %>
+      <h2>What you said about this movie</h2>
+      <p><%= @own_shout.first.shout %>
+      <% else %>
+      <h2>Your thoughts?</h2>
+      <%= form_for @shout, url: movie_shouts_path(movie_id: @movie.id), html: {class: "input-group"} do |f| %>
+        <%= f.text_field :shout, class:"form-control" %>
+        <span class="input-group-btn">
+          <%= f.submit "Shout!", class:"btn btn-default" %>
+        </span>
+      <% end %>
     <% end %>
   <% end %>
 
