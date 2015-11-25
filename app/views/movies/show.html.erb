@@ -15,14 +15,13 @@
   <% end %>
 </div>
 
-  <div class="row" style="background-image: url('http://image.tmdb.org/t/p/original/<%= @movie.backdrop_path %>'); background-size: cover;">
+  <div class="row" style="background-image: url('http://image.tmdb.org/t/p/original/<%= @movie.backdrop_path %>'); background-size: cover; min-height: 500px;">
     <div class="col-md-6 col-md-offset-3">
       <h1 class="text-center text-uppercase"><%= @movie.title %></h1>
-      <% if @trailer.nil? == false %>
-          <iframe width="100%" height="320" src="//v.traileraddict.com/<%= @trailer %>" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" scrolling="no"></iframe>
-      <% end %>
     </div>
   </div>
+
+</div>
 
 <div class="container">
   <div class="row">
@@ -34,11 +33,15 @@
       <p><strong>Overview:</strong> <%= @movie.overview %></p>
       <p><strong>Runtime:</strong> <%= @movie.runtime %></p>
       <p><strong>Tagline:</strong> <%= @movie.tagline %></p>
-      <p><strong>Director:</strong> <%= @movie.tagline %></p>
-      <p><strong>Cast:</strong> <%= @movie.tagline %></p>
+      <p><strong>Director:</strong> <%= Tmdb::Movie.crew(@movie.id)[1]["name"] %></p>
+      <p><strong>Cast:</strong> <% @cast.first(10).each do |actor| %> <%= actor %>, <% end %></p>
       <p><strong>Vote Average:</strong> <%= @movie.vote_average %></p>
     </div>
   </div>
+
+  <% if @trailer.nil? == false %>
+      <iframe width="100%" height="320" src="//v.traileraddict.com/<%= @trailer %>" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" scrolling="no"></iframe>
+  <% end %>
   
   <% if @own_shout.empty? == false %>
     <h2>What you said about this movie</h2>
