@@ -26,6 +26,7 @@ gem 'clearance'
 gem 'nokogiri'
 gem 'carrierwave'
 gem 'socialization'
+gem 'public_activity'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -13,6 +13,18 @@ class UsersController < Clearance::UsersController
     redirect_to edit_user_path
   end
 
+  def follow
+    @user = User.find(params[:id])
+    current_user.follow!(@user)
+    redirect_to user_path(@user)
+  end
+
+  def unfollow
+    @user = User.find(params[:id])
+    current_user.unfollow!(@user)
+    redirect_to user_path(@user)
+  end
+
   private
 
   def edit_user_params

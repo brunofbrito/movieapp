@@ -8,6 +8,11 @@ class MoviesController < ApplicationController
     if params[:search]
       @results = Tmdb::Movie.find(params[:search])
     end
+    followees_ids = current_user.followees(User).map(&:id)
+        #get only the ids of the people current_user folllows
+        followees_ids << current_user.id
+    @personal_activities = PublicActivity::Activity.where(owner_id: followees_ids, owner_type: "User").order('created_at DESC').limit(20)
+    @world_activities = PublicActivity::Activity.order('created_at DESC').limit(20)
   end
 
   def show

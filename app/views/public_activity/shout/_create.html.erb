@@ -1,0 +1,5 @@
+<li class="list-group-item">
+  <%= link_to (image_tag User.find(a.trackable.user_id).avatar.url, size:"32"), user_path(a.trackable.user_id) %> 
+  <em><%= a.trackable.shout %></em> about <%= link_to Tmdb::Movie.detail(a.trackable.movie_id)["title"], movie_path(a.trackable.movie_id) %>
+  <em><%= a.trackable.created_at %></em>
+</li>

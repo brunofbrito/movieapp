@@ -14,6 +14,12 @@
     <hr>
   <% end %>
 
+  <h1>What your friends are saying</h1>
+    <p><%= render_activities(@personal_activities) %></p>
+
+  <h1>What the world is saying</h1>
+    <p><%= render_activities(@world_activities) %></p>
+
   <h1>Now playing</h1>
   <%@now_playing.each_slice(6) do |movies| %>
     <div class="row">

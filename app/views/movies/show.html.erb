@@ -53,8 +53,8 @@
   <% if @shouts.empty? == false %>
   <h2>What people are saying</h2>
     <% @shouts.each do |shout| %>
-      <div><%= image_tag User.find(shout.user_id).avatar.url, size:"32" %><%= shout.shout %> <em>by</em> 
-        <%= link_to User.find(shout.user_id).name, user_path(User.find(shout.user_id)) %>
+      <div><%= link_to (image_tag User.find(shout.user_id).avatar.url, size:"32"), user_path(shout.user_id) %><%= shout.shout %> <em>by</em> 
+        <%= link_to User.find(shout.user_id).name, user_path(User.find(shout.user_id)) %> <em>on <%= shout.created_at %></em>
       </div>
     <% end %>
   <% else %>

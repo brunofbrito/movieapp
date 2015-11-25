@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   resources :movies,            only: [:index, :show] do
     resources :shouts,          only: [:create]
   end
-  resources :users,             only: [:show, :edit, :update]
+  resources :users,             only: [:show, :edit, :update] do
+    collection do
+         post :follow
+         post :unfollow
+     end
+   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
