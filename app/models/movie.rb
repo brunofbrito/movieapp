@@ -2,7 +2,7 @@ require 'ostruct'
 
 class Movie
   include ActiveModel::Model
-  delegate :id, :title, :poster_path, :release_date, :overview, :runtime,
+  delegate :id, :title, :poster_path, :backdrop_path, :release_date, :overview, :runtime,
     :tagline, :vote_average, :imdb_id, to: :movie_data
 
   def initialize(movie_data)
