@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <%= image_tag @user.avatar.url, class:"img-responsive img-circle" %>
+    </div>
+    <div class="col-md-9">
+      <h2><%= @user.name %> <% if current_user == @user %>(that's you!)<% end %></h2>
+      <p><%= @user.about %></p>
+      <p>Followers: <%= @user.followers_count %></p>
+      <p>Following: <%= @user.followees_count %></p>
+      <% unless current_user == @user %>
+        <% if current_user.follows?(@user) %>
+          <%= button_to "Following", { :controller => "users", :action => "unfollow", :id => @user, :remote => "true"}, class: "btn btn-info" %>
+        <% else %>
+          <%= button_to "Follow", { :controller => "users", :action => "follow", :id => @user, :remote => "true"}, {class: "btn btn-default"} %>
+        <% end %>
+      <% end %>
+      <h3>Recent shouts</h3>
+      <% @user.shouts.sort_by {|a,b| b}.reverse.each do |shout| %>
+        <%= shout.shout %> on <%= link_to Tmdb::Movie.detail(shout.movie_id)["title"], movie_path(shout.movie_id) %><br>
+      <% end %>
+    </div>
+  </div>
+</div>

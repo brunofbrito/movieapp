@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Movieapp2</title>
+  <title>Movie Social App</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -20,22 +20,36 @@
       <%= link_to "Movie App", root_path, class:"navbar-brand" %>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <%= form_tag(movies_path, :method => "get", class: "form-control") do %>
+      <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <%= form_tag(movies_path, :method => "get", class: "form-control") do %>
             <%= text_field_tag :search, params[:search], placeholder: "Search Movies", class: "form-control" %>
           </div>
-          <%= submit_tag "Search", class: "btn btn-default" %>
-        <% end %>
+            <%= submit_tag "Search", class: "btn btn-default" %>
+          <% end %>
       </form>
+      <% if signed_in? %>
       <ul class="nav navbar-nav navbar-right">
-        <li class="navbar-text"><% if signed_in? %>Signed in as: <%= current_user.email %><% end %></li>
-        <li><% if signed_in? %><%= button_to 'Sign out', sign_out_path, method: :delete, class: "btn btn-danger navbar-btn" %>
+        <li>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= image_tag(current_user.avatar.url, size: "48", class: "img-circle avatar") %>  
+        <% if current_user.name.nil? == false %>
+          <%= current_user.name %>'s account</a>
         <% else %>
-          <%= button_to 'Sign in', sign_in_path, method: :get, class: "btn btn-info navbar-btn" %>
+          <%= current_user.email %>
         <% end %>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'Edit profile', edit_user_path(current_user) %></li>
+            <li><%= link_to 'Public profile', user_path(current_user) %></li>
+            <li><%= link_to 'Sign out', sign_out_path, method: :delete %></li>
+          </ul>
         </li>
       </ul>
+      <% else %>
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= button_to 'Sign in', sign_in_path, method: :get, class: "btn btn-info navbar-btn" %></li>
+        </ul>
+        <% end %>
+      </div>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

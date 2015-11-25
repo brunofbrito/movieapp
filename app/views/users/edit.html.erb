@@ -1,0 +1,19 @@
+<div class="container">
+  <h2>Edit your profile</h2>
+
+  <%= form_for @user do |form| %>
+    <%= render partial: '/users/form', object: form %>
+
+    <%= form.label(:about, :"About you")  %>
+    <%= form.text_area :about, class:"form-control" %><br>
+
+    <%= form.label(:avatar, :"Profile picture")  %>
+    <%= form.file_field :avatar %><br>
+
+    <div class="submit-field">
+      <%= form.submit 'Update', class:"btn btn-info" %>
+    </div><br>
+  
+  <% end %>
+</div>
+</div>

@@ -26,7 +26,7 @@
 
   <div class="row">
     <div class="col-md-3">
-      <img src="http://image.tmdb.org/t/p/w154/<%= @movie.poster_path %>">
+      <img src="http://image.tmdb.org/t/p/w154/<%= @movie.poster_path %>" class="img-responsive img-rounded">
     </div>
     <div class="col-md-9">
       <p><strong>Release date:</strong> <%= @movie.release_date %></p>
@@ -36,14 +36,28 @@
       <p><strong>Vote Average:</strong> <%= @movie.vote_average %></p>
     </div>
   </div>
-
-  <h1>Your thoughts?</h1>
-  <%= form_for @shout, url: movie_shouts_path(movie_id: @movie.id), html: {class: "form-group"} do |f| %>
-    <%= f.text_field :shout %>
-    <%= f.submit "Submit" %>
+  
+  <% if @own_shout.empty? == false %>
+    <h2>What you said about this movie</h2>
+    <p><%= @own_shout.first.shout %>
+    <% else %>
+    <h2>Your thoughts?</h2>
+    <%= form_for @shout, url: movie_shouts_path(movie_id: @movie.id), html: {class: "input-group"} do |f| %>
+      <%= f.text_field :shout, class:"form-control" %>
+      <span class="input-group-btn">
+        <%= f.submit "Shout!", class:"btn btn-default" %>
+      </span>
+    <% end %>
   <% end %>
 
-  <% @shouts.each do |shout| %>
-    <div><%= shout.shout %> <em>by</em> <%= User.find(shout.user_id).email %></div>
+  <% if @shouts.empty? == false %>
+  <h2>What people are saying</h2>
+    <% @shouts.each do |shout| %>
+      <div><%= link_to (image_tag User.find(shout.user_id).avatar.url, size:"32"), user_path(shout.user_id) %><%= shout.shout %> <em>by</em> 
+        <%= link_to User.find(shout.user_id).name, user_path(User.find(shout.user_id)) %> <em>on <%= shout.created_at %></em>
+      </div>
+    <% end %>
+  <% else %>
+    <p>There are no shouts yet for this movie</p>
   <% end %>
 </div>
