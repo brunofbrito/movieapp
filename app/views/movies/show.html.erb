@@ -15,33 +15,31 @@
   <% end %>
 </div>
 
-  <div class="row" style="background-image: url('http://image.tmdb.org/t/p/original/<%= @movie.backdrop_path %>'); background-size: cover; min-height: 500px;">
-    <div class="col-md-6 col-md-offset-3">
-      <h1 class="text-center text-uppercase"><%= @movie.title %></h1>
+  <div class="movie-backdrop" style="background: linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.9)), url('http://image.tmdb.org/t/p/original/<%= @movie.backdrop_path %>'); background-size: cover;">
+      <%= render "layouts/header" %>
+      <div class="container">
+        <div class="row movie-main">
+          <div class="col-md-3">
+            <img src="http://image.tmdb.org/t/p/w500/<%= @movie.poster_path %>" class="img-responsive img-rounded">
+            <% if @trailer.nil? == false %>
+              <iframe width="100%" src="//v.traileraddict.com/<%= @trailer %>" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" scrolling="no"></iframe>
+            <% end %>
+          </div>
+          <div class="col-md-6">
+            <h1 class="text-uppercase movie-title"><%= @movie.title %></h1>
+            <p><span class="movie-field">Release date:</span> <span class="movie-data"><%= @movie.release_date %></span></p>
+            <p><span class="movie-field">Overview:</span> <span class="movie-data"><%= @movie.overview %></span></p>
+            <p><span class="movie-field">Runtime:</span> <span class="movie-data"><%= @movie.runtime %></span></p>
+            <p><span class="movie-field">Tagline:</span> <span class="movie-data"><%= @movie.tagline %></span></p>
+            <p><span class="movie-field">Director:</span> <span class="movie-data"><%= Tmdb::Movie.crew(@movie.id)[1]["name"] %></span></p>
+            <p><span class="movie-field">Cast:</span> <span class="movie-data"><% @cast.first(10).each do |actor| %> <%= actor %>, <% end %></span></p>
+          </div>
+          <div class="col-md-3 movie-rating-box">
+          <span><%= @movie.vote_average %></span>
+        </div>
     </div>
   </div>
-
 </div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-3">
-      <img src="http://image.tmdb.org/t/p/w154/<%= @movie.poster_path %>" class="img-responsive img-rounded">
-    </div>
-    <div class="col-md-9">
-      <p><strong>Release date:</strong> <%= @movie.release_date %></p>
-      <p><strong>Overview:</strong> <%= @movie.overview %></p>
-      <p><strong>Runtime:</strong> <%= @movie.runtime %></p>
-      <p><strong>Tagline:</strong> <%= @movie.tagline %></p>
-      <p><strong>Director:</strong> <%= Tmdb::Movie.crew(@movie.id)[1]["name"] %></p>
-      <p><strong>Cast:</strong> <% @cast.first(10).each do |actor| %> <%= actor %>, <% end %></p>
-      <p><strong>Vote Average:</strong> <%= @movie.vote_average %></p>
-    </div>
-  </div>
-
-  <% if @trailer.nil? == false %>
-      <iframe width="100%" height="320" src="//v.traileraddict.com/<%= @trailer %>" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" scrolling="no"></iframe>
-  <% end %>
   
   <% if signed_in? %>
     <% if @own_shout.empty? == false %>
@@ -68,4 +66,3 @@
   <% else %>
     <p>There are no shouts yet for this movie</p>
   <% end %>
-</div>

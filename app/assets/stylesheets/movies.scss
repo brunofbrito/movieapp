@@ -1,3 +1,73 @@
 // Place all the styles related to the movies controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+$mywhite: #E8EDDF;
+$myyellow: #F7B32B;
+
+$heading: 'Lato', sans-serif;
+$body: 'Playfair Display', serif;
+
+.navbar-default {
+  background-color: rgba(0,0,0,.6);
+  border: none;
+  color: $mywhite;
+  font-family: $heading;
+  padding: 5px 25px;
+  span {
+    color: $mywhite;
+  }
+  a {
+    color: $mywhite;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  img {
+    margin: 0px 5px 0px 20px;
+  }
+}
+
+.user-name {
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.movie-backdrop {
+  min-height: 720px;
+}
+
+.movie-main {
+  margin-top: 300px;
+}
+
+.movie-title {
+  font-family: $heading;
+  font-weight: 700;
+  color: $mywhite;
+}
+
+.movie-field {
+  font-family: $heading;
+  color: $mywhite;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.movie-data {
+  font-family: $body;
+  color: $myyellow;
+}
+
+.movie-rating-box {
+  background-color: fade-out($myyellow, 0.5);
+  min-height: 100px;
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $mywhite;
+  font-family: $heading;
+  font-weight: 300;
+  font-size: 55px;
+}
