@@ -15,24 +15,31 @@
   <% end %>
 </div>
 
-  <div class="movie-backdrop" style="background: linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.9)), url('http://image.tmdb.org/t/p/original/<%= @movie.backdrop_path %>'); background-size: cover;">
+  <div class="movie-backdrop" style="background: linear-gradient(180deg, rgba(0,0,0,.01) 20%, rgba(0,0,0,95) 80%, rgba(0,0,0,1)100%), url('http://image.tmdb.org/t/p/original/<%= @movie.backdrop_path %>') fixed; background-size: cover;">
       <%= render "layouts/header" %>
       <div class="container">
         <div class="row movie-main">
           <div class="col-md-3">
-            <img src="http://image.tmdb.org/t/p/w500/<%= @movie.poster_path %>" class="img-responsive img-rounded">
+            <img src="http://image.tmdb.org/t/p/w500/<%= @movie.poster_path %>" class="img-responsive img-rounded movie-poster">
             <% if @trailer.nil? == false %>
               <iframe width="100%" src="//v.traileraddict.com/<%= @trailer %>" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" scrolling="no"></iframe>
             <% end %>
           </div>
           <div class="col-md-6">
             <h1 class="text-uppercase movie-title"><%= @movie.title %></h1>
+            <p class="movie-genre-box">
+              <% @movie.genres.each do |genre| %>
+                <span class="movie-genre-type"><%= genre["name"] %></span>
+              <% end %>
+            <span class="glyphicon glyphicon-time"></span> <span class="movie-data"><%= @movie.runtime %> min</span></p>
+            </p>
             <p><span class="movie-field">Release date:</span> <span class="movie-data"><%= @movie.release_date %></span></p>
             <p><span class="movie-field">Overview:</span> <span class="movie-data"><%= @movie.overview %></span></p>
-            <p><span class="movie-field">Runtime:</span> <span class="movie-data"><%= @movie.runtime %></span></p>
             <p><span class="movie-field">Tagline:</span> <span class="movie-data"><%= @movie.tagline %></span></p>
             <p><span class="movie-field">Director:</span> <span class="movie-data"><%= Tmdb::Movie.crew(@movie.id)[1]["name"] %></span></p>
-            <p><span class="movie-field">Cast:</span> <span class="movie-data"><% @cast.first(10).each do |actor| %> <%= actor %>, <% end %></span></p>
+            <div class="movie-cast text-center">
+              <% @cast_pics.first(10).each do |actor| %><a href="#" class="darken"><img src="http://image.tmdb.org/t/p/w90/<%= actor %>"/></a><% end %>
+            </div>
           </div>
           <div class="col-md-3 movie-rating-box">
           <span><%= @movie.vote_average %></span>
@@ -40,29 +47,33 @@
     </div>
   </div>
 </div>
-  
-  <% if signed_in? %>
-    <% if @own_shout.empty? == false %>
-      <h2>What you said about this movie</h2>
-      <p><%= @own_shout.first.shout %>
-      <% else %>
-      <h2>Your thoughts?</h2>
-      <%= form_for @shout, url: movie_shouts_path(movie_id: @movie.id), html: {class: "input-group"} do |f| %>
-        <%= f.text_field :shout, class:"form-control" %>
-        <span class="input-group-btn">
-          <%= f.submit "Shout!", class:"btn btn-default" %>
-        </span>
+
+<div class="user-content-box">
+  <div class="container ">
+    <% if signed_in? %>
+      <% if @own_shout.empty? == false %>
+        <h2>What you said about this movie</h2>
+        <p><%= @own_shout.first.shout %>
+        <% else %>
+        <h2>Your thoughts?</h2>
+        <%= form_for @shout, url: movie_shouts_path(movie_id: @movie.id), html: {class: "input-group"} do |f| %>
+          <%= f.text_field :shout, class:"form-control" %>
+          <span class="input-group-btn">
+            <%= f.submit "Shout!", class:"btn btn-default" %>
+          </span>
+        <% end %>
       <% end %>
     <% end %>
-  <% end %>
 
-  <% if @shouts.empty? == false %>
-  <h2>What people are saying</h2>
-    <% @shouts.each do |shout| %>
-      <div><%= link_to (image_tag User.find(shout.user_id).avatar.url, size:"32"), user_path(shout.user_id) %><%= shout.shout %> <em>by</em> 
-        <%= link_to User.find(shout.user_id).name, user_path(User.find(shout.user_id)) %> <em>on <%= shout.created_at %></em>
-      </div>
+    <% if @shouts.empty? == false %>
+    <h2>What people are saying</h2>
+      <% @shouts.each do |shout| %>
+        <div><%= link_to (image_tag User.find(shout.user_id).avatar.url, size:"32"), user_path(shout.user_id) %><%= shout.shout %> <em>by</em> 
+          <%= link_to User.find(shout.user_id).name, user_path(User.find(shout.user_id)) %> <em>on <%= shout.created_at %></em>
+        </div>
+      <% end %>
+    <% else %>
+      <p>There are no shouts yet for this movie</p>
     <% end %>
-  <% else %>
-    <p>There are no shouts yet for this movie</p>
-  <% end %>
+  </div>
+</div>

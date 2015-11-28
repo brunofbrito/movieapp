@@ -3,10 +3,13 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 $mywhite: #E8EDDF;
+$mylightgray: #CFDBD5;
+$myblack: #242423;
+$mydarkgray: #333533;
 $myyellow: #F7B32B;
 
 $heading: 'Lato', sans-serif;
-$body: 'Playfair Display', serif;
+$body: 'Lato', sans-serif;
 
 .navbar-default {
   background-color: rgba(0,0,0,.6);
@@ -38,13 +41,33 @@ $body: 'Playfair Display', serif;
 }
 
 .movie-main {
-  margin-top: 300px;
+  margin-top: 420px;
+}
+
+.movie-poster {
+  margin-bottom: 20px;
 }
 
 .movie-title {
   font-family: $heading;
   font-weight: 700;
   color: $mywhite;
+  margin-top: 0px;
+}
+
+.movie-genre-box {
+  margin: 30px 0px;
+  .glyphicon {
+    color: $myyellow;
+  }
+}
+
+.movie-genre-type {
+  color: $myyellow;
+  padding: 8px;
+  margin-right: 5px;
+  border: 2px solid $myyellow;
+  text-transform: uppercase;
 }
 
 .movie-field {
@@ -59,15 +82,52 @@ $body: 'Playfair Display', serif;
   color: $myyellow;
 }
 
+.movie-cast {
+  margin-bottom: 30px;
+  img {
+    margin: 10px 10px 10px 0;
+    border: 2px $myyellow solid;
+  }
+}
+
+a.darken {
+    background: black;
+    padding: 0;
+}
+
+a.darken img {
+    transition: all 0.25s linear;
+}
+
+a.darken:hover img {
+    opacity: 0.5;         
+}
+
 .movie-rating-box {
-  background-color: fade-out($myyellow, 0.5);
-  min-height: 100px;
-  min-width: 100px;
+  background-color: fade-out($myyellow, 0.15);
+  width: 125px;
+  height: 125px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $mywhite;
+  color: $myblack;
   font-family: $heading;
   font-weight: 300;
   font-size: 55px;
+}
+
+.user-content-box {
+  background-color: $mydarkgray;
+  padding: 20px 0px;
+  color: $mywhite;
+  font-family: $body;
+}
+
+footer {
+  background-color: $myblack;
+  color: $mylightgray;
+  font-family: $heading;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 20px 0;
 }

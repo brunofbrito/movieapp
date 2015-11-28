@@ -22,7 +22,8 @@ class MoviesController < ApplicationController
       @results = Tmdb::Movie.find(params[:search])
     end
     @movie = Movie.new(Tmdb::Movie.detail(params[:id]))
-    @cast = Tmdb::Movie.casts(@movie.id).map {|actor| actor["name"] }
+    @cast_names = Tmdb::Movie.casts(@movie.id).map {|actor| actor["name"] }
+    @cast_pics = Tmdb::Movie.casts(@movie.id).map {|actor| actor["profile_path"] }
     @shout = Shout.new
     if current_user
       @own_shout = Shout.where(movie_id: @movie.id, user_id: current_user.id)
